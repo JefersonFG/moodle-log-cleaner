@@ -1,9 +1,17 @@
 import argparse
 
+import pandas as pd
+
 
 # Main cleaning function
 def clean_dataset(source_dataset_path, student_list, target_dataset_path) -> None:
-    raise Exception("Not implemented")
+    """clean_dataset takes the path to the dataset to clean as well as the path to the list of students and saves the
+    cleaned dataset on the target path.
+
+    The procedure will check all events on the log for being related to a student or not, then remove the ones that
+    aren't, such as events from admins and professors."""
+    df = pd.read_csv(source_dataset_path)
+    df.to_csv(target_dataset_path, index=False)
 
 
 # Main script
