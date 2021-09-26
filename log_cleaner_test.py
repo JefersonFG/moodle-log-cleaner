@@ -12,6 +12,12 @@ class AnonymizerTest(unittest.TestCase):
     test_student_list_path = 'test_student_list.csv'
     cleaned_dataset_path = 'cleaned_dataset.csv'
 
+    # List of student names present on the test dataset, cleaned dataset must contain entries for these students
+    student_names = ['Test name 1', 'Test name 2']
+
+    # List of names present on the test dataset that are not students, so cleaned dataset must not contain these names
+    non_student_names = ['Administrador Moodle']
+
     def setUp(self):
         """"setUp creates the test dataset with valid data"""
         df = pd.DataFrame(
@@ -91,6 +97,15 @@ class AnonymizerTest(unittest.TestCase):
         """Tests that the cleaned dataset is created, but doesn't validate its contents"""
         log_cleaner.clean_dataset(self.test_dataset_path, self.test_student_list_path, self.cleaned_dataset_path)
         self.assertTrue(os.path.exists(self.cleaned_dataset_path), "Anonymized dataset not created")
+
+    def test_cleaned_names(self):
+        """Tests that the cleaned dataset has entries for students and no entries for non students"""
+        log_cleaner.clean_dataset(self.test_dataset_path, self.test_student_list_path, self.cleaned_dataset_path)
+        df = pd.read_csv(self.cleaned_dataset_path)
+        for name in self.student_names:
+            self.assertIn(name, df.values, "cleaned dataset lost entries for a student")
+        for name in self.non_student_names:
+            self.assertNotIn(name, df.values, "non student entry found in the cleaned dataset")
 
 
 if __name__ == '__main__':
