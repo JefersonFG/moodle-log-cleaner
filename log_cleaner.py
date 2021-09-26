@@ -18,8 +18,8 @@ def clean_dataset(source_dataset_path, student_list_path, target_dataset_path) -
 
 def get_student_list_from_path(student_list_path) -> list:
     """Generates a list of students from the csv passed as input"""
-    df = pd.read_csv(student_list_path, header=None)
-    return df[0]
+    df = pd.read_excel(student_list_path, header=None, engine="odf")
+    return list(df[0])
 
 
 def remove_non_student_entries(df, student_list) -> pd.DataFrame:

@@ -9,7 +9,7 @@ import log_cleaner
 
 class AnonymizerTest(unittest.TestCase):
     test_dataset_path = 'test_dataset.csv'
-    test_student_list_path = 'test_student_list.csv'
+    test_student_list_path = 'test_student_list.ods'
     cleaned_dataset_path = 'cleaned_dataset.csv'
 
     # List of student names present on the test dataset, cleaned dataset must contain entries for these students
@@ -75,13 +75,14 @@ class AnonymizerTest(unittest.TestCase):
         df = pd.DataFrame(
             {
                 'Name': [
-                    '"Test name 1"',
-                    '"Test name 2"'
+                    'Test name 1',
+                    'Test name 2'
                 ]
             }
         )
 
-        df.to_csv(self.test_student_list_path, index=False, quoting=csv.QUOTE_NONE, header=False)
+        with pd.ExcelWriter(self.test_student_list_path) as writer:
+            df.to_excel(writer, engine="ods", header=False, index=False)
 
     def tearDown(self):
         """tearDown deletes both the source and the target files to clean up after the tests"""
