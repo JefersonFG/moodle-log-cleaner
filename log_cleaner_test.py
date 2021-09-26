@@ -76,8 +76,7 @@ class AnonymizerTest(unittest.TestCase):
             {
                 'Name': [
                     '"Test name 1"',
-                    '"Test name 2"',
-                    'Administrador Moodle'
+                    '"Test name 2"'
                 ]
             }
         )
