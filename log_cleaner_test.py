@@ -18,6 +18,10 @@ class AnonymizerTest(unittest.TestCase):
     # List of names present on the test dataset that are not students, so cleaned dataset must not contain these names
     non_student_names = ['Administrador Moodle']
 
+    # List of columns to be removed on the cleaned dataset
+    columns_to_be_removed = [log_cleaner.affected_user_column, log_cleaner.description_column,
+                             log_cleaner.origin_column, log_cleaner.ip_address_column]
+
     def setUp(self):
         """"setUp creates the test dataset with valid data"""
         df = pd.DataFrame(
@@ -106,6 +110,13 @@ class AnonymizerTest(unittest.TestCase):
             self.assertIn(name, df.values, "cleaned dataset lost entries for a student")
         for name in self.non_student_names:
             self.assertNotIn(name, df.values, "non student entry found in the cleaned dataset")
+
+    def test_removed_columns(self):
+        """Tests columns that must be removed from the original dataset for absence on cleaned dataset"""
+        log_cleaner.clean_dataset(self.test_dataset_path, self.test_student_list_path, self.cleaned_dataset_path)
+        df = pd.read_csv(self.cleaned_dataset_path)
+        for column in self.columns_to_be_removed:
+            self.assertNotIn(column, df.columns, f"found column '{column}' in the cleaned dataset")
 
 
 if __name__ == '__main__':
