@@ -48,7 +48,7 @@ def remove_columns(df) -> pd.DataFrame:
 # Main script
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='''Use this tool to clean the logs obtained from moodle, removing 
-        entries unrelated to students, such as entries from admins and professors.''')
+        entries unrelated to students and irrelevant columns for further analysis.''')
     parser.add_argument("source_path", help="Path to the moodle logs to clean")
     parser.add_argument("student_list", help="Path to the list of students exported on moodle")
     parser.add_argument("target_path", help="Path to save the cleaned logs")

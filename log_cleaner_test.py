@@ -7,7 +7,7 @@ import pandas as pd
 import log_cleaner
 
 
-class AnonymizerTest(unittest.TestCase):
+class CleanerTest(unittest.TestCase):
     test_dataset_path = 'test_dataset.csv'
     test_student_list_path = 'test_student_list.ods'
     cleaned_dataset_path = 'cleaned_dataset.csv'
@@ -100,7 +100,7 @@ class AnonymizerTest(unittest.TestCase):
     def test_create_cleaned_dataset(self):
         """Tests that the cleaned dataset is created, but doesn't validate its contents"""
         log_cleaner.clean_dataset(self.test_dataset_path, self.test_student_list_path, self.cleaned_dataset_path)
-        self.assertTrue(os.path.exists(self.cleaned_dataset_path), "Anonymized dataset not created")
+        self.assertTrue(os.path.exists(self.cleaned_dataset_path), "cleaned dataset not created")
 
     def test_cleaned_names(self):
         """Tests that the cleaned dataset has entries for students and no entries for non students"""
